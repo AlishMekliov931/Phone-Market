@@ -1,0 +1,36 @@
+import { Injectable } from "@angular/core";
+import { HttpClientService } from "../http-client.service";
+import { Router } from "@angular/router";
+import { Subscribable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
+
+
+
+@Injectable()
+export class CommentService {
+    public comments = new Subject<any>()
+    constructor(
+        private httpService: HttpClientService,
+    ) {
+
+    }
+
+    addComment(body): Subscribable<Object>{
+        let userId = sessionStorage.getItem('id')
+        return this.httpService.post('comment/create/' + userId, body, true)
+    }
+    getComments(id): void {
+        return this.loadComments(id)
+         
+    }
+
+    deleteComment(id){
+        return this.httpService.get('comment/delete/' + id, true)
+    }
+
+    loadComments(id){
+        this.httpService.get('comment/all/' + id, false).subscribe(res => {
+            this.comments.next(res.comments)          
+        })
+    }
+}

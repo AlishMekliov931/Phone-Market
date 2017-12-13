@@ -1,0 +1,73 @@
+<div *ngIf='phone' class="container-fluid well details">
+  <div class="col col-md-8">
+    <div class="row">
+      <div class="col-xs-8 text-center">
+        <img src={{phone.imgUrl}} alt="">
+      </div>
+      
+      <div class="col col-md-4">
+        <h4>
+          <small class="text-warning">Brand:</small>
+          <strong>{{phone.brand}}</strong>
+        </h4>
+        <hr>
+        <h4>
+          <small class="text-warning">Model:</small>
+          <strong>{{phone.model}}</strong>
+        </h4>
+        <hr>
+        <h4>
+          <small class="text-warning">Price:</small>
+          <strong>{{phone.price}}$</strong>
+        </h4>
+        <hr>
+        <h4>
+          <small class="text-warning">Date of publication:</small>
+          <strong>{{phone.date | date: 'yyyy-MM-dd HH:mm'}}</strong>
+        </h4>
+        <hr>
+        <h4>
+          <small class="text-warning">Description:</small>
+          <strong>{{phone.description}}</strong>
+        </h4>
+        <hr>
+      </div>
+    </div>
+    <div class="row detailsBtn">
+      <a [routerLink]="['/order/add', phone._id]" class="btn btn-warning btn-lg">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+        <strong>Order</strong>
+      </a>
+      <a *ngIf='authService.isAdmin()' [routerLink]="['/phone/edit', phone._id]" class="btn btn-info btn-lg">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <strong>Edit</strong>
+      </a>
+      <a *ngIf='authService.isAdmin()' [routerLink]="['/phone/delete', phone._id]" class="btn btn-danger btn-lg">
+        <span class="glyphicon glyphicon-remove"></span>
+        <strong>Delete</strong>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4 comment">
+    <app-comment *ngIf='!authService.isLoggedIn()'></app-comment>
+
+    <app-comment-list></app-comment-list>
+
+    <!-- <div *ngFor = 'let comment of phone.comments' class="col-md-12">
+        <div class="media">
+          <a [routerLink]="['/comment/delete', comment._id]"> 
+            <span *ngIf='authService.isCommentOwner(comment._id)' class="glyphicon glyphicon-remove commentDel"></span>           
+          </a>  
+          <div class="media-left">
+                <span class="glyphicon glyphicon-user"></span>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{comment.creator.name}}</h4>
+              <p>{{comment.text}}</p>
+            </div>
+            <small>Date: {{comment.date | date: 'yyyy-MM-dd HH:mm'}}</small>
+          </div>
+          <hr>
+    </div> -->
+  </div>
+</div>
