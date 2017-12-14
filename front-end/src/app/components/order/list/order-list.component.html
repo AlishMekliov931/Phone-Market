@@ -21,9 +21,9 @@
         <td *ngIf = '!authService.isAdmin()'>{{order?.status}}</td>
         <td *ngIf = 'authService.isAdmin()'>
             <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{order?.status[0]}}
+                <button class="btn btn-primary dropdown-toggle myBtn" type="button" data-toggle="dropdown">{{order?.status[0]}}
                 <span class="caret"></span></button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu ">
                   <li><a [routerLink]="['/order/update', order._id, order.status[1]]" >{{order?.status[1]}}</a></li>
                   <li><a [routerLink]="['/order/update', order._id, order.status[2]]" >{{order?.status[2]}}</a></li>
                   <li><a [routerLink]="['/order/update', order._id, order.status[3]]" >{{order?.status[3]}}</a></li>

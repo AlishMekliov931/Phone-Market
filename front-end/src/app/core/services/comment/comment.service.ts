@@ -25,7 +25,8 @@ export class CommentService {
     }
 
     deleteComment(id){
-        return this.httpService.get('comment/delete/' + id, true)
+        let userId = sessionStorage.getItem('id')
+        return this.httpService.get('comment/delete/' + id + '/' + userId, true)
     }
 
     loadComments(id){
