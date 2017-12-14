@@ -120,4 +120,9 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+router.get('/logout', function (req, res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.sendStatus(401);
+});
+
 module.exports = router;

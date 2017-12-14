@@ -6,6 +6,7 @@ const roleCheck = require('../middleware/role-check');
 
 const Phone = require('mongoose').model('Phone');
 const Comment = require('mongoose').model('Comment');
+const User = require('mongoose').model('User');
 
 router.get('/all', async(req, res, next) => {
     const pageSize = 6
@@ -109,15 +110,21 @@ router.get('/details/:id', async(req, res, next) => {
     }
 
 });
-router.post('/create', roleCheck('Admin'), async(req, res, next) => {
+router.post('/create/:userId', async(req, res, next) => {
     let phone = req.body
-
+    let userId = req.params.userId
+    let user = await User.findById(userId)
+    
     try {
+        if (!user.roles.includes('Admin')) {
+            throw new Error('Unauthorized')
+        }
         let result = await Phone.create({
             brand: phone.brand,
             model: phone.model,
             imgUrl: phone.imgUrl,
             price: phone.price,
+            date: Date.now(),
             description: phone.description
         })
 
@@ -139,11 +146,16 @@ router.post('/create', roleCheck('Admin'), async(req, res, next) => {
 
 
 });
-router.post('/edit/:id', roleCheck('Admin'), async(req, res, next) => {
+router.post('/edit/:id/:userId', async(req, res, next) => {
     let phone = req.body
     let id = req.params.id
+    let userId = req.params.userId
+    let user = await User.findById(userId)
 
     try {
+       if (!user.roles.includes('Admin')) {
+            throw new Error('Unauthorized')
+        }
         let result = await Phone.findByIdAndUpdate(id, {
             $set: phone
         })
@@ -162,10 +174,14 @@ router.post('/edit/:id', roleCheck('Admin'), async(req, res, next) => {
         });
     }
 });
-router.get('/delete/:id', roleCheck('Admin'), async(req, res, next) => {
+router.get('/delete/:id/:userId', async(req, res, next) => {
     let id = req.params.id
-
+    let userId = req.params.userId
+    let user = await User.findById(userId)
     try {
+        if (!user.roles.includes('Admin')) {
+            throw new Error('Unauthorized')
+        }
         let result = await Phone.findByIdAndRemove(id)
         await Comment.find({phone: result._id}, {multi: true}).remove()
         console.log('Phone delete')
