@@ -3,13 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/sheard/not-found/not-found.component';
 import { LogoutComponent } from './components/auth/logout/logout';
-import { AdminGuard } from './core/guards/admin/admin.guard';
+import { AuthGuard } from './core/guards/authentication/auth.guard';
 
 const routes: Routes = [
   {path: '',  redirectTo:'home', pathMatch: 'full'},
   {path: 'home',  component: HomeComponent},
   {path: 'logout',  component: LogoutComponent},
   {path: 'phone',  loadChildren: "app/components/phone/phone.module#PhoneModule"},
+  {path: 'order', canActivate:[AuthGuard],  loadChildren: "app/components/order/order.module#OrderModule"},
   {path: '**',  component: NotFoundComponent}
 ];
 

@@ -30,15 +30,20 @@ export class PhoneService {
   }
 
   addPhone(phone: PhoneInputModel): Subscribable<Object> {
-    return this.httpService.post('phone/create', phone, true)
+    let id = sessionStorage.getItem('id')
+    return this.httpService.post('phone/create/' + id, phone, true)
   }
 
   deletePhone(id): Subscribable<Object> {
-    return this.httpService.get('phone/delete/' + id, true)
+    let userId = sessionStorage.getItem('id')
+    
+    return this.httpService.get('phone/delete/' + id + '/' + userId, true)
   }
 
   editPhone(id, body): Subscribable<Object> {
-    return this.httpService.post('phone/edit/' + id, body, true)
+    let userId = sessionStorage.getItem('id')
+    
+    return this.httpService.post('phone/edit/' + id + '/' + userId, body, true)
   }
 
   getNewPhones(): Subscribable<Object>{

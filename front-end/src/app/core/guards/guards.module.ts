@@ -1,11 +1,13 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { AdminGuard } from "./admin/admin.guard";
+import { AuthGuard } from "./authentication/auth.guard";
 // import { AuthGuard } from "./authentication/auth.guard";
 
 @NgModule({
   providers: [ 
-      AdminGuard
+      AdminGuard,
+      AuthGuard
      ],
   imports: [
     CommonModule

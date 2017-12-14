@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
                 this.authService.username = res["user"]['name']
                 this.toastr.success(res["message"], 'Success!');
                 this.model.reset()
+                this.authService.tryNavigate()
             } else {
                 this.toastr.error(res["message"], 'Error!');
             }

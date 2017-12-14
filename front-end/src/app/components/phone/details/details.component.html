@@ -8,27 +8,27 @@
       <div class="col col-md-4">
         <h4>
           <small class="text-warning">Brand:</small>
-          <strong>{{phone.brand}}</strong>
+          <strong>{{phone?.brand}}</strong>
         </h4>
         <hr>
         <h4>
           <small class="text-warning">Model:</small>
-          <strong>{{phone.model}}</strong>
+          <strong>{{phone?.model}}</strong>
         </h4>
         <hr>
         <h4>
           <small class="text-warning">Price:</small>
-          <strong>{{phone.price}}$</strong>
+          <strong>{{phone?.price}}$</strong>
         </h4>
         <hr>
         <h4>
           <small class="text-warning">Date of publication:</small>
-          <strong>{{phone.date | date: 'yyyy-MM-dd HH:mm'}}</strong>
+          <strong>{{phone?.date | date: 'yyyy-MM-dd HH:mm'}}</strong>
         </h4>
         <hr>
         <h4>
           <small class="text-warning">Description:</small>
-          <strong>{{phone.description}}</strong>
+          <strong>{{phone?.description}}</strong>
         </h4>
         <hr>
       </div>
@@ -53,21 +53,5 @@
 
     <app-comment-list></app-comment-list>
 
-    <!-- <div *ngFor = 'let comment of phone.comments' class="col-md-12">
-        <div class="media">
-          <a [routerLink]="['/comment/delete', comment._id]"> 
-            <span *ngIf='authService.isCommentOwner(comment._id)' class="glyphicon glyphicon-remove commentDel"></span>           
-          </a>  
-          <div class="media-left">
-                <span class="glyphicon glyphicon-user"></span>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">{{comment.creator.name}}</h4>
-              <p>{{comment.text}}</p>
-            </div>
-            <small>Date: {{comment.date | date: 'yyyy-MM-dd HH:mm'}}</small>
-          </div>
-          <hr>
-    </div> -->
   </div>
 </div>

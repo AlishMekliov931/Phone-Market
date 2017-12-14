@@ -11,7 +11,7 @@
         <a routerLink="/phone/list">All Phone</a>
       </li>
       <li *ngIf='!server.isLoggedIn()'>
-        <a routerLink="/orders">Order Status</a>
+        <a [routerLink]="['/order/list']">Order Status</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">

@@ -29,6 +29,7 @@ export class AuthService {
   }
 
   logout(): void {
+    this.httpService.get('auth/logout', false)
     sessionStorage.clear()
     this.username = ''   
     this.redirectUrl = ''

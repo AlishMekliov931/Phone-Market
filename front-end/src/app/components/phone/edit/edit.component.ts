@@ -52,7 +52,6 @@ export class EditComponent implements OnInit {
                 this.authService.tryNavigate()
             })            
         })
-        console.log('edittt')
     }
 
     ngOnInit() {      

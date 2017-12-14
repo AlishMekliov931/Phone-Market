@@ -17,10 +17,10 @@ export class AdminGuard implements CanActivate {
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : boolean {
-    return this.checkIfLogged(state.url);
+    return this.checkIsAdmin(state.url);
   }
 
-  checkIfLogged(url : string) {
+  checkIsAdmin(url : string) {
     if (this.authService.isAdmin()) {
       return true;
     }
