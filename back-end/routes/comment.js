@@ -7,11 +7,17 @@ const deleteCheck = require('../middleware/delete-check');
 
 const Comment = require('mongoose').model('Comment');
 const Phone = require('mongoose').model('Phone');
+const User = require('mongoose').model('User');
 
-router.post('/create/:id', authCheck, async(req, res, next) => {
+router.post('/create/:id', async(req, res, next) => {
     let comment = req.body
     let userId = req.params.id
+    let user = await User.findById(userId)
     try {
+        if (!user) {
+            throw new Error('Unauthorized')
+        }
+        
         let result = await Comment.create({
             text: comment.text,
             creator: userId,
@@ -68,9 +74,19 @@ router.get('/all/:id', async(req, res, next) => {
     }
 
 });
-router.get('/delete/:id', deleteCheck, async(req, res, next) => {
+router.get('/delete/:id/:userId', async(req, res, next) => {
     let id = req.params.id
+    let userId = req.params.userId
+    const user = await User.findById(userId);
+    const currComment = await Comment.findById(id);
     try {
+        console.log(user.roles.indexOf('Admin') <= -1)
+        if (currComment.creator != userId ) {
+            if (user.roles.indexOf('Admin') <= -1) {
+                console.log('errr')
+                throw new Error('Unauthorized')   
+            }          
+        }
         let comment = await Comment.findByIdAndRemove(id)
         let phone = await Phone.update(
             { _id: comment.phone }, 
@@ -84,7 +100,7 @@ router.get('/delete/:id', deleteCheck, async(req, res, next) => {
             message: 'Comment delete successfuly.',
         });
     } catch (error) {
-        console.log('Phone not exist')
+        console.log('Comment not exist')
 
         res.status(202).json({
             success: false,
